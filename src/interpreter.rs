@@ -4,6 +4,7 @@ pub struct Interpreter {
     instructions: Vec<Instruction>,
     pos: usize,
     stack: Vec<u32>,
+    term: console::Term,
 }
 
 impl Interpreter {
@@ -12,6 +13,7 @@ impl Interpreter {
             instructions,
             pos: 0,
             stack: Vec::new(),
+            term: console::Term::stdout(),
         }
     }
 
@@ -33,9 +35,10 @@ impl Interpreter {
 
     fn eval_instruction(&mut self, instruction: Instruction) {
         match instruction {
-            Instruction::Push(v) => self.push(*v),
+            Instruction::Push(v) => self.push_instr(*v),
             Instruction::Pop => { self.pop(); },
             Instruction::Print => self.print(),
+            Instruction::GetInput => self.get_input(),
             Instruction::Error => eprintln!("Couldn't parse code"),
             _ => eprintln!("Unknown expression"),
         }
@@ -51,7 +54,18 @@ impl Interpreter {
         }
     }
 
-    fn push(&mut self, value: Instruction) {
+    fn get_input(&mut self) {
+        match self.term.read_char() {
+            Ok(c) => self.push(c as u32),
+            Err(e) => eprintln!("Failed to get input: {}", e),
+        }
+    }
+
+    fn push(&mut self, value: u32) {
+        self.stack.push(value);
+    }
+
+    fn push_instr(&mut self, value: Instruction) {
         match value {
             Instruction::Number(n) => self.stack.push(n),
             Instruction::Character(c) => self.stack.push(c as u32),

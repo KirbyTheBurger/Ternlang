@@ -6,6 +6,7 @@ pub enum Instruction {
     Push(Box<Instruction>),
     Pop,
     Print,
+    GetInput,
 
     Error,
     EOF
@@ -53,6 +54,7 @@ impl Parser {
             },
             '<' => self.adv_ret(Instruction::Pop),
             '!' => self.adv_ret(Instruction::Print),
+            '?' => self.adv_ret(Instruction::GetInput),
             _ => todo!(),
         }
     }

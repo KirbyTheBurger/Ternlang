@@ -31,3 +31,15 @@ To print a value, use the `!` instruction. This pops a value from the stack and 
 >d>l>r>o>w>o>l>l>e>h!!!!!!!!!!
 ```  
 *output:* `helloworld`  
+  
+## Getting input  
+To get the user's input, use the `?` instruction:  
+```ternlang
+?!
+```  
+*Read the user's input and then print it*  
+  
+```ternlang
+>e?!!
+```  
+*Read the user's input, then print it followed by an `e`*  

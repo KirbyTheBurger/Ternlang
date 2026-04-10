@@ -28,14 +28,14 @@ impl Interpreter {
                 break;
             }
 
-            self.eval_instruction(c.expect("Expected instruction, found `None`"));
+            self.eval_instruction(&c.expect("Expected instruction, found `None`"));
             self.advance();
         }
     }
 
-    fn eval_instruction(&mut self, instruction: Instruction) {
+    fn eval_instruction(&mut self, instruction: &Instruction) {
         match instruction {
-            Instruction::Push(v) => self.push_instr(*v),
+            Instruction::Push(v) => self.push_instr(*v.clone()),
             Instruction::Pop => { self.pop(); },
             Instruction::Print => self.print(),
             Instruction::GetInput => self.get_input(),
@@ -43,11 +43,44 @@ impl Interpreter {
             Instruction::Add | Instruction::Sub | Instruction::Mul | Instruction::Div => {
                 self.eval_arithmetic(instruction);
             },
+            Instruction::Loop(i) => self.eval_loop(i),
+            Instruction::Compare => self.eval_compare(),
             _ => eprintln!("Unknown expression"),
         }
     }
 
-    fn eval_arithmetic(&mut self, operation: Instruction) {
+    fn eval_compare(&mut self) {
+        let b = self.pop();
+        let a = self.pop();
+
+        if a == b {
+            self.push(1);
+        } else if a < b {
+            self.push(0);
+        } else {
+            self.push(2);
+        }
+    }
+
+    fn eval_loop(&mut self, instructions: &Vec<Instruction>) {
+        loop {
+            let a = match self.stack.get(self.stack.len().wrapping_sub(1)) {
+                Some(n) => n,
+                None => return,
+            };
+            let b = match self.stack.get(self.stack.len().wrapping_sub(2)) {
+                Some(n) => n,
+                None => return,
+            };
+            if a == b { break; }
+
+            for i in instructions {
+                self.eval_instruction(i);
+            }
+        }
+    }
+
+    fn eval_arithmetic(&mut self, operation: &Instruction) {
         let b = self.pop();
         let a = self.pop();
         self.push(match operation {

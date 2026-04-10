@@ -56,20 +56,39 @@ Add 2 numbers using `+`:
 ### Subtraction  
 Subtract a number from another using `-`:  
 ```ternlang
->6>2-
+>20>2-
 ```  
 *Value stored on the stack is now `4`*  
   
 ### Multiplication  
 Multiply 2 numbers using `*`:  
 ```ternlang
->3>4*
+>10>11*
 ```  
 *Value stored on the stack is now `12`  
   
 ### Division  
 Divide a number by another using `/`:  
 ```ternlang
->8>4/
+>22>11/
 ```  
 *Value stored on the stack is now `2`  
+  
+## Comparing  
+The `=` instruction pops 2 values off the stack. If a < b it pushes 0, if a == b it pushes 1, and if a > b it pushes 2  
+```ternlang
+>201>201=
+```  
+*Value stored on the stack is now `1`*  
+  
+```ternlang
+>1>2=
+```  
+*Value stored on the stack is now `0`*  
+  
+## Loops  
+You can create a loop using `[]`. Each iteration, the top 2 values on the stack will be compared. If they are equal, the loop stops. Else, the loop continues running.  
+```ternlang
+>10>0[>1+>a!]
+```  
+*output:* `aaa`  

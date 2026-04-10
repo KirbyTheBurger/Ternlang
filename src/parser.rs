@@ -7,6 +7,9 @@ pub enum Instruction {
     Pop,
     Print,
     GetInput,
+    Compare,
+
+    Loop(Vec<Instruction>),
 
     Add,
     Sub,
@@ -64,8 +67,27 @@ impl Parser {
             '-' => self.adv_ret(Instruction::Sub),
             '*' => self.adv_ret(Instruction::Mul),
             '/' => self.adv_ret(Instruction::Div),
+            '=' => self.adv_ret(Instruction::Compare),
+            '[' =>self.read_loop(),
             _ => todo!(),
         }
+    }
+
+    fn read_loop(&mut self) -> Instruction {
+        self.advance();
+
+        let mut instructions = Vec::new();
+        loop {
+            let current = self.current();
+            if matches!(current, Some(']') | None) {
+                break;
+            }
+
+            instructions.push(self.parse_expression(*current.unwrap()));
+        }
+        self.advance();
+
+        Instruction::Loop(instructions)
     }
 
     fn read_value(&mut self) -> Instruction {

@@ -2,7 +2,7 @@
 Start by downloading `cargo`. You can do this by isntalling rust using rustup: https://rustup.rs/  
 Once done, verify that cargo has been installed correctly by running `cargo --version`.  
 Now run `cargo install ternlang` to install Ternlang.
-Veifiy ternlang has been installed correctly by running `ternlang`. This will output the current version and a list of possible commands.  
+Verifiy ternlang has been installed correctly by running `ternlang`. This will output the current version and a list of possible commands.  
   
 ## Introduction  
 Ternlang is a stack based programming language, which means that you're able to push and pop variables to and from the stack, and that all instructions are operated on the stack. All values are in ternary, which is a base-3 number system.  

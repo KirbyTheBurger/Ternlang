@@ -70,7 +70,7 @@ impl Parser {
             '=' => self.adv_ret(Instruction::Compare),
             '@' => self.adv_ret(Instruction::Duplicate),
             '[' =>self.read_loop(),
-            _ => todo!(),
+            _ => panic!("Parser error, couldnt parse instruction starting with {}", current),
         }
     }
 

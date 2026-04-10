@@ -5,3 +5,7 @@ edition = "2024"
 
 [dependencies]
 console = "0.16.3"
+
+[[bin]]
+name = "ternlang"
+path = "src/main.rs"

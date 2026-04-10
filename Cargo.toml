@@ -2,6 +2,9 @@
 name = "ternlang"
 version = "0.1.0"
 edition = "2024"
+description = "A stack based ternary esolang"
+license = "MIT"
+repository = "https://github.com/KirbyTheBurger/Ternlang"
 
 [dependencies]
 console = "0.16.3"

@@ -43,3 +43,33 @@ To get the user's input, use the `?` instruction:
 >e?!!
 ```  
 *Read the user's input, then print it followed by an `e`*  
+  
+## Arithmetic  
+Each arithmetic instruction pops 2 values from the stack and executes that operation on them, then pushes the new value to the stack.  
+### Addition  
+Add 2 numbers using `+`:  
+```ternlang
+>1>2+
+```  
+*Value stored on the stack is now `3`*  
+  
+### Subtraction  
+Subtract a number from another using `-`:  
+```ternlang
+>6>2-
+```  
+*Value stored on the stack is now `4`*  
+  
+### Multiplication  
+Multiply 2 numbers using `*`:  
+```ternlang
+>3>4*
+```  
+*Value stored on the stack is now `12`  
+  
+### Division  
+Divide a number by another using `/`:  
+```ternlang
+>8>4/
+```  
+*Value stored on the stack is now `2`  

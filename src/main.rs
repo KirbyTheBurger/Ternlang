@@ -4,7 +4,7 @@ mod parser;
 mod interpreter;
 
 fn main() {
-    let mut parser = Parser::new("?!".to_string());
+    let mut parser = Parser::new("?>1+!".to_string());
     let instructions = parser.parse();
     println!("{:?}", instructions);
 

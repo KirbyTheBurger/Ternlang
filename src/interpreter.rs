@@ -40,8 +40,23 @@ impl Interpreter {
             Instruction::Print => self.print(),
             Instruction::GetInput => self.get_input(),
             Instruction::Error => eprintln!("Couldn't parse code"),
+            Instruction::Add | Instruction::Sub | Instruction::Mul | Instruction::Div => {
+                self.eval_arithmetic(instruction);
+            },
             _ => eprintln!("Unknown expression"),
         }
+    }
+
+    fn eval_arithmetic(&mut self, operation: Instruction) {
+        let b = self.pop();
+        let a = self.pop();
+        self.push(match operation {
+            Instruction::Add => a + b,
+            Instruction::Sub => a - b,
+            Instruction::Mul => a * b,
+            Instruction::Div => a / b,
+            _ => panic!("Couldnt evaluate arithmetic operation, this is an inernal error. If this happens, please let me (the developer) know."),
+        })
     }
 
     fn print(&mut self) {

@@ -8,6 +8,11 @@ pub enum Instruction {
     Print,
     GetInput,
 
+    Add,
+    Sub,
+    Mul,
+    Div,
+
     Error,
     EOF
 }
@@ -55,6 +60,10 @@ impl Parser {
             '<' => self.adv_ret(Instruction::Pop),
             '!' => self.adv_ret(Instruction::Print),
             '?' => self.adv_ret(Instruction::GetInput),
+            '+' => self.adv_ret(Instruction::Add),
+            '-' => self.adv_ret(Instruction::Sub),
+            '*' => self.adv_ret(Instruction::Mul),
+            '/' => self.adv_ret(Instruction::Div),
             _ => todo!(),
         }
     }

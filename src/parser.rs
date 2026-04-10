@@ -8,6 +8,7 @@ pub enum Instruction {
     Print,
     GetInput,
     Compare,
+    Duplicate,
 
     Loop(Vec<Instruction>),
 
@@ -16,7 +17,6 @@ pub enum Instruction {
     Mul,
     Div,
 
-    Error,
     EOF
 }
 
@@ -68,6 +68,7 @@ impl Parser {
             '*' => self.adv_ret(Instruction::Mul),
             '/' => self.adv_ret(Instruction::Div),
             '=' => self.adv_ret(Instruction::Compare),
+            '@' => self.adv_ret(Instruction::Duplicate),
             '[' =>self.read_loop(),
             _ => todo!(),
         }

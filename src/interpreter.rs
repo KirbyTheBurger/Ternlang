@@ -17,10 +17,6 @@ impl Interpreter {
         }
     }
 
-    pub fn display_stack(&self) {
-        println!("{:?}", self.stack);
-    }
-
     pub fn run(&mut self) {
         loop {
             let c = self.current().cloned();
@@ -39,13 +35,21 @@ impl Interpreter {
             Instruction::Pop => { self.pop(); },
             Instruction::Print => self.print(),
             Instruction::GetInput => self.get_input(),
-            Instruction::Error => eprintln!("Couldn't parse code"),
             Instruction::Add | Instruction::Sub | Instruction::Mul | Instruction::Div => {
                 self.eval_arithmetic(instruction);
             },
             Instruction::Loop(i) => self.eval_loop(i),
             Instruction::Compare => self.eval_compare(),
+            Instruction::Duplicate => self.duplicate(),
             _ => eprintln!("Unknown expression"),
+        }
+    }
+
+    fn duplicate(&mut self) {
+        let value = self.get(0).copied();
+        match value {
+            Some(n) => self.push(n),
+            None => eprintln!("Can't duplicate value if stack is empty"),
         }
     }
 
@@ -64,12 +68,12 @@ impl Interpreter {
 
     fn eval_loop(&mut self, instructions: &Vec<Instruction>) {
         loop {
-            let a = match self.stack.get(self.stack.len().wrapping_sub(1)) {
-                Some(n) => n,
+            let a = match self.get(0) {
+                Some(n) => *n,
                 None => return,
             };
-            let b = match self.stack.get(self.stack.len().wrapping_sub(2)) {
-                Some(n) => n,
+            let b = match self.get(1) {
+                Some(n) => *n,
                 None => return,
             };
             if a == b { break; }
@@ -107,6 +111,10 @@ impl Interpreter {
             Ok(c) => self.push(c as u32),
             Err(e) => eprintln!("Failed to get input: {}", e),
         }
+    }
+
+    fn get(&mut self, offset: usize) -> Option<&u32> {
+        self.stack.get(self.stack.len().wrapping_sub(offset + 1))
     }
 
     fn push(&mut self, value: u32) {

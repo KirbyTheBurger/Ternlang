@@ -92,3 +92,10 @@ You can create a loop using `[]`. Each iteration, the top 2 values on the stack 
 >10>0[>1+>a!]
 ```  
 *output:* `aaa`  
+  
+## Duplication  
+You can duplicate the value at the top of the stack using `@`:  
+```ternlang
+>e@!!
+```  
+*output:* `ee`  
